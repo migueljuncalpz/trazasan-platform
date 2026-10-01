@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: trazasan-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: trazasan
+      POSTGRES_PASSWORD: trazasan
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U trazasan -d postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    volumes:
+      - trazasan-postgres-data:/var/lib/postgresql/data
+      - ./infrastructure/postgres/init:/docker-entrypoint-initdb.d:ro
+
+volumes:
+  trazasan-postgres-data:

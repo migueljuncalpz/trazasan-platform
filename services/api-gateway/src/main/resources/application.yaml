@@ -1,0 +1,87 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          default-filters:
+            - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_FIRST
+          globalcors:
+            cors-configurations:
+              '[/**]':
+                allowedOrigins: "*"
+                allowedMethods:
+                  - GET
+                  - POST
+                  - PUT
+                  - DELETE
+                  - OPTIONS
+                  - PATCH
+                allowedHeaders: "*"
+                maxAge: 3600
+          routes:
+            - id: catalog-openapi
+              uri: ${CATALOG_SERVICE_URL:http://localhost:8081}
+              predicates:
+                - Path=/api-docs/catalog
+              filters:
+                - SetPath=/v3/api-docs
+            - id: traceability-openapi
+              uri: ${TRACEABILITY_SERVICE_URL:http://localhost:8082}
+              predicates:
+                - Path=/api-docs/traceability
+              filters:
+                - SetPath=/v3/api-docs
+            - id: operations-openapi
+              uri: ${OPERATIONS_SERVICE_URL:http://localhost:8083}
+              predicates:
+                - Path=/api-docs/operations
+              filters:
+                - SetPath=/v3/api-docs
+            - id: reporting-openapi
+              uri: ${REPORTING_SERVICE_URL:http://localhost:8084}
+              predicates:
+                - Path=/api-docs/reporting
+              filters:
+                - SetPath=/v3/api-docs
+            - id: catalog-service
+              uri: ${CATALOG_SERVICE_URL:http://localhost:8081}
+              predicates:
+                - Path=/api/v1/catalog/**
+            - id: traceability-service
+              uri: ${TRACEABILITY_SERVICE_URL:http://localhost:8082}
+              predicates:
+                - Path=/api/v1/traceability/**
+            - id: operations-service
+              uri: ${OPERATIONS_SERVICE_URL:http://localhost:8083}
+              predicates:
+                - Path=/api/v1/operations/**
+            - id: reporting-service
+              uri: ${REPORTING_SERVICE_URL:http://localhost:8084}
+              predicates:
+                - Path=/api/v1/reporting/**
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+springdoc:
+  swagger-ui:
+    enabled: true
+    disable-swagger-default-url: true
+    path: /swagger-ui.html
+    urls:
+      - name: Catalog
+        url: /api-docs/catalog
+      - name: Operations
+        url: /api-docs/operations
+      - name: Reporting
+        url: /api-docs/reporting
+      - name: Traceability
+        url: /api-docs/traceability

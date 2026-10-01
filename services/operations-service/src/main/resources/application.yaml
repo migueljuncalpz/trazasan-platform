@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: operations-service
+  datasource:
+    url: ${OPERATIONS_DB_URL:jdbc:postgresql://localhost:5432/trazasan_operations}
+    username: ${OPERATIONS_DB_USERNAME:trazasan}
+    password: ${OPERATIONS_DB_PASSWORD:trazasan}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+
+server:
+  port: 8083
+  servlet:
+    context-path:
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
