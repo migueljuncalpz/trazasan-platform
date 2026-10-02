@@ -5,21 +5,21 @@ spring:
     gateway:
       server:
         webflux:
-          default-filters:
-            - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_FIRST
           globalcors:
+            add-to-simple-url-handler-mapping: true
             cors-configurations:
-              '[/**]':
-                allowedOrigins: "*"
-                allowedMethods:
+              "[/**]":
+                allowed-origins:
+                  - "http://localhost:3000"
+                allowed-methods:
                   - GET
                   - POST
                   - PUT
+                  - PATCH
                   - DELETE
                   - OPTIONS
-                  - PATCH
-                allowedHeaders: "*"
-                maxAge: 3600
+                allowed-headers:
+                  - "*"
           routes:
             - id: catalog-openapi
               uri: ${CATALOG_SERVICE_URL:http://localhost:8081}

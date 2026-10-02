@@ -1,4 +1,4 @@
-package com.migueljuncalp.trazasan.traceability.config;
+package com.migueljuncalp.trazasan.login.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
@@ -12,9 +12,9 @@ public class OpenApiConfig {
     @Bean
     OpenAPI inventoryOpenApi() {
         return new OpenAPI().info(new Info()
-                .title("Traceability service api")
+                .title("Login service api")
                 .version("v1")
-                .description("API de traceability")
+                .description("API de Login")
                 .contact(new Contact().name("Trazasan")));
     }
 }
