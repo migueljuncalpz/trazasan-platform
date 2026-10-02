@@ -20,6 +20,7 @@ spring:
                   - OPTIONS
                 allowed-headers:
                   - "*"
+                allow-credentials: true
           routes:
             - id: catalog-openapi
               uri: ${CATALOG_SERVICE_URL:http://localhost:8081}
@@ -45,6 +46,12 @@ spring:
                 - Path=/api-docs/reporting
               filters:
                 - SetPath=/v3/api-docs
+            - id: login-openapi
+              uri: ${LOGIN_SERVICE_URL:http://localhost:8085}
+              predicates:
+                - Path=/api-docs/login
+              filters:
+                - SetPath=/v3/api-docs
             - id: catalog-service
               uri: ${CATALOG_SERVICE_URL:http://localhost:8081}
               predicates:
@@ -61,6 +68,10 @@ spring:
               uri: ${REPORTING_SERVICE_URL:http://localhost:8084}
               predicates:
                 - Path=/api/v1/reporting/**
+            - id: login-service
+              uri: ${LOGIN_SERVICE_URL:http://localhost:8085}
+              predicates:
+                - Path=/api/v1/login/**
 
 server:
   port: 8080
@@ -85,3 +96,5 @@ springdoc:
         url: /api-docs/reporting
       - name: Traceability
         url: /api-docs/traceability
+      - name: Login
+        url: /api-docs/login

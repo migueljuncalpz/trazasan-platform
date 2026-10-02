@@ -9,6 +9,7 @@ import java.util.Collections;
 @Configuration
 public class SwaggerCleanPathConfig {
 
+
     @Bean
     public OpenApiCustomizer globalOpenApiCustomizer() {
         return openApi -> {
