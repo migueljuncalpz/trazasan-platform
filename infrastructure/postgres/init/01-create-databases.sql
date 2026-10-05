@@ -1,6 +1,5 @@
-CREATE DATABASE trazasan_catalog;
-CREATE DATABASE trazasan_traceability;
-CREATE DATABASE trazasan_operations;
-CREATE DATABASE trazasan_reporting;
-CREATE DATABASE trazasan_login;
-
+CREATE SCHEMA IF NOT EXISTS identity;
+CREATE SCHEMA IF NOT EXISTS catalog;
+CREATE SCHEMA IF NOT EXISTS traceability;
+CREATE SCHEMA IF NOT EXISTS operations;
+CREATE SCHEMA IF NOT EXISTS reporting;

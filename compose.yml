@@ -5,17 +5,17 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: trazasan
-      POSTGRES_PASSWORD: trazasan
+      POSTGRES_DB: trazasan
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U trazasan -d postgres"]
+      test: ["CMD-SHELL", "pg_isready -U user -d trazasan"]
       interval: 5s
       timeout: 3s
       retries: 10
     volumes:
       - trazasan-postgres-data:/var/lib/postgresql/data
-      - ./infrastructure/postgres/init:/docker-entrypoint-initdb.d:ro
+      - ./infrastructure/postgres/init:/docker-entrypoint-initdb.d
 
 volumes:
   trazasan-postgres-data:

@@ -2,13 +2,19 @@ spring:
   application:
     name: reporting-service
   datasource:
-    url: ${REPORTING_DB_URL:jdbc:postgresql://localhost:5432/trazasan_reporting}
-    username: ${REPORTING_DB_USERNAME:trazasan}
-    password: ${REPORTING_DB_PASSWORD:trazasan}
+    url: jdbc:postgresql://localhost:5432/trazasan
+    username: user
+    password: password
   jpa:
-    hibernate:
-      ddl-auto: validate
-    open-in-view: false
+    properties:
+      hibernate:
+        default_schema: reporting
+
+  flyway:
+    enabled: true
+    default-schema: reporting
+    schemas:
+      - reporting
 
 server:
   port: 8084

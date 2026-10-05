@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: login-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/trazasan
+    username: user
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_schema: identity
+
+  flyway:
+    enabled: true
+    default-schema: identity
+    baseline-on-migrate: true
+    baseline-version: 0
+    schemas:
+      - identity
+
+trazasan:
+  bootstrap-admin:
+    hospital-name: ${TRAZASAN_ADMIN_HOSPITAL_NAME:Hospital inicial}
+    hospital-slug: ${TRAZASAN_ADMIN_HOSPITAL_SLUG:hospital-inicial}
+    email: ${TRAZASAN_ADMIN_EMAIL:admin@trazasan.local}
+    password: ${TRAZASAN_ADMIN_PASSWORD:}
+  jwt:
+    issuer: trazasan-login-service
+    access-token-duration: 15m
+    private-key: file:${JWT_PRIVATE_KEY_PATH}
+    public-key: file:${JWT_PUBLIC_KEY_PATH}
+
+server:
+  port: 8085
+  servlet:
+    context-path:
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+  api-docs:
+    path: /v3/api-docs

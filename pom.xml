@@ -24,7 +24,7 @@
         <module>services/traceability-service</module>
         <module>services/operations-service</module>
         <module>services/reporting-service</module>
-        <module>services/login-service</module>
+        <module>services/identity-service</module>
 
     </modules>
 

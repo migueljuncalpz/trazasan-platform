@@ -2,13 +2,19 @@ spring:
   application:
     name: operations-service
   datasource:
-    url: ${OPERATIONS_DB_URL:jdbc:postgresql://localhost:5432/trazasan_operations}
-    username: ${OPERATIONS_DB_USERNAME:trazasan}
-    password: ${OPERATIONS_DB_PASSWORD:trazasan}
+    url: jdbc:postgresql://localhost:5432/trazasan
+    username: user
+    password: password
   jpa:
-    hibernate:
-      ddl-auto: validate
-    open-in-view: false
+    properties:
+      hibernate:
+        default_schema: operations
+
+  flyway:
+    enabled: true
+    default-schema: operations
+    schemas:
+      - operations
 
 server:
   port: 8083

@@ -2,15 +2,19 @@ spring:
   application:
     name: catalog-service
   datasource:
-    url: ${CATALOG_DB_URL:jdbc:postgresql://localhost:5432/trazasan_catalog}
-    username: ${CATALOG_DB_USERNAME:trazasan}
-    password: ${CATALOG_DB_PASSWORD:trazasan}
+    url: jdbc:postgresql://localhost:5432/trazasan
+    username: user
+    password: password
   jpa:
-    hibernate:
-      ddl-auto: validate
-    open-in-view: false
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        default_schema: catalog
 
+  flyway:
+    enabled: true
+    default-schema: catalog
+    schemas:
+      - catalog
 server:
   port: 8081
   servlet:

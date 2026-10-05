@@ -2,13 +2,19 @@ spring:
   application:
     name: traceability-service
   datasource:
-    url: ${TRACEABILITY_DB_URL:jdbc:postgresql://localhost:5432/trazasan_traceability}
-    username: ${TRACEABILITY_DB_USERNAME:trazasan}
-    password: ${TRACEABILITY_DB_PASSWORD:trazasan}
+    url: jdbc:postgresql://localhost:5432/trazasan
+    username: user
+    password: password
   jpa:
-    hibernate:
-      ddl-auto: validate
-    open-in-view: false
+    properties:
+      hibernate:
+        default_schema: traceability
+
+  flyway:
+    enabled: true
+    default-schema: traceability
+    schemas:
+      - traceability
 
 server:
   port: 8082
