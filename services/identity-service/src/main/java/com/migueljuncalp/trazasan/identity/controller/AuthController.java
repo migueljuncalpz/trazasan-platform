@@ -5,6 +5,8 @@ import com.migueljuncalp.trazasan.identity.controller.dto.auth.response.LoginRes
 import com.migueljuncalp.trazasan.identity.controller.dto.auth.response.RefreshResponse;
 import com.migueljuncalp.trazasan.identity.service.AuthService;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import java.time.Duration;
 
 @RestController
 @RequestMapping("/api/v1/auth")
+@Tag(name = "Autenticación")
 public class AuthController {
 
     private final AuthService authService;
@@ -28,7 +31,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request){
+    ResponseEntity<LoginResponse> login( @Valid @RequestBody LoginRequest request){
         LoginResponse result =
                 authService.login(request);
         ResponseCookie responseCookie = createRefreshCookie(result.refreshToken());
@@ -71,11 +74,35 @@ public class AuthController {
                 )
                 .body(result);
     }
-    /*
-    @PostMapping("/logout")
-    ResponseEntity registerUser(@RequestBody CreateUserDTO  createUserDTO){
 
-        return ResponseEntity.ok("Login OK");
-    }*/
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(
+            @Parameter(hidden = true)
+            @CookieValue(
+                    name = "refresh_token",
+                    required = false
+            )
+            String refreshToken
+    ) {
+        if (refreshToken != null) {
+            authService.logout(refreshToken);
+        }
+
+        ResponseCookie deletedCookie = ResponseCookie
+                .from("refresh_token", "")
+                .httpOnly(true)
+                .secure(false)
+                .sameSite("Lax")
+                .path("/api/v1/auth")
+                .maxAge(Duration.ZERO)
+                .build();
+
+        return ResponseEntity.noContent()
+                .header(
+                        HttpHeaders.SET_COOKIE,
+                        deletedCookie.toString()
+                )
+                .build();
+    }
 
 }

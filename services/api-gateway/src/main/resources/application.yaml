@@ -46,10 +46,10 @@ spring:
                 - Path=/api-docs/reporting
               filters:
                 - SetPath=/v3/api-docs
-            - id: login-openapi
-              uri: ${LOGIN_SERVICE_URL:http://localhost:8085}
+            - id: identity-openapi
+              uri: ${IDENTITY_SERVICE_URL:http://localhost:8085}
               predicates:
-                - Path=/api-docs/auth
+                - Path=/api-docs/identity
               filters:
                 - SetPath=/v3/api-docs
             - id: catalog-service
@@ -68,10 +68,10 @@ spring:
               uri: ${REPORTING_SERVICE_URL:http://localhost:8084}
               predicates:
                 - Path=/api/v1/reporting/**
-            - id: login-service
-              uri: ${LOGIN_SERVICE_URL:http://localhost:8085}
+            - id: identity-service
+              uri: ${IDENTITY_SERVICE_URL:http://localhost:8085}
               predicates:
-                - Path=/api/v1/auth/**
+                - Path=/api/v1/auth/**,/api/v1/users/**
 
 server:
   port: 8080
@@ -88,6 +88,8 @@ springdoc:
     disable-swagger-default-url: true
     path: /swagger-ui.html
     urls:
+      - name: Identity
+        url: /api-docs/identity
       - name: Catalog
         url: /api-docs/catalog
       - name: Operations
@@ -96,5 +98,3 @@ springdoc:
         url: /api-docs/reporting
       - name: Traceability
         url: /api-docs/traceability
-      - name: Login
-        url: /api-docs/auth

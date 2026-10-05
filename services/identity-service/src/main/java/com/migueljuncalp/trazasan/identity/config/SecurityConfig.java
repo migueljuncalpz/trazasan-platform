@@ -12,31 +12,32 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(
-        HttpSecurity http
+            HttpSecurity http
     ) throws Exception {
         return http
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session -> session
-                .sessionCreationPolicy(
-                    SessionCreationPolicy.STATELESS
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(
+                                SessionCreationPolicy.STATELESS
+                        )
                 )
-            )
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(
-                    "/swagger-ui.html",
-                    "/swagger-ui/**",
-                    "/v3/api-docs",
-                    "/v3/api-docs/**",
-                    "/actuator/health",
-                    "/api/v1/auth/login",
-                    "/api/v1/auth/refresh",
-                    "/api/v1/auth/status"
-                ).permitAll()
-                .anyRequest().authenticated()
-            )
-            .oauth2ResourceServer(oauth2 ->
-                oauth2.jwt(Customizer.withDefaults())
-            )
-            .build();
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
+                                "/v3/api-docs",
+                                "/v3/api-docs/**",
+                                "/actuator/health",
+                                "/api/v1/auth/login",
+                                "/api/v1/auth/refresh",
+                                "/api/v1/auth/logout",
+                                "/api/v1/auth/status"
+                        ).permitAll()
+                        .anyRequest().authenticated()
+                )
+                .oauth2ResourceServer(oauth2 ->
+                        oauth2.jwt(Customizer.withDefaults())
+                )
+                .build();
     }
 }

@@ -1,6 +1,7 @@
 package com.migueljuncalp.trazasan.identity.service;
 
 import com.migueljuncalp.trazasan.identity.controller.dto.auth.response.RefreshResponse;
+import com.migueljuncalp.trazasan.identity.service.exceptions.InvalidCredentialsException;
 import com.migueljuncalp.trazasan.identity.service.result.CreatedSession;
 import com.migueljuncalp.trazasan.identity.controller.dto.auth.request.LoginRequest;
 import com.migueljuncalp.trazasan.identity.controller.dto.auth.response.LoginResponse;
@@ -24,7 +25,8 @@ public class AuthService {
 
     public AuthService (AppUserRepository appUserRepository,
                         JwtService jwtService,
-                        PasswordEncoder passwordEncoder, SessionService sessionService){
+                        PasswordEncoder passwordEncoder,
+                        SessionService sessionService){
         this.appUserRepository = appUserRepository;
         this.jwtService = jwtService;
         this.passwordEncoder = passwordEncoder;
@@ -42,17 +44,17 @@ public class AuthService {
                         request.hospitalSlug(),
                         email
                 )
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(InvalidCredentialsException::new);
 
         if (!user.isEnabled()) {
-            throw new RuntimeException();
+            throw new InvalidCredentialsException();
         }
 
         if (!passwordEncoder.matches(
                 request.password(),
                 user.getPasswordHash()
         )) {
-            throw new RuntimeException();
+            throw new InvalidCredentialsException();
         }
 
         CreatedSession session = sessionService.create(user);
@@ -84,6 +86,11 @@ public class AuthService {
                 refreshedSession.refreshToken(),
                 jwtService.getAccessTokenDurationSeconds()
         );
+    }
+
+    @Transactional
+    public void logout(String refreshToken){
+        sessionService.logout(refreshToken);
     }
 
 }

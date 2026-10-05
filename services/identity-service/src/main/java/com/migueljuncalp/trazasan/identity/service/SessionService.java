@@ -78,4 +78,15 @@ public class SessionService {
 
         return createdSession;
     }
+
+    @Transactional
+    public void logout(String refreshToken) {
+        String tokenHash = tokenHasher.hash(refreshToken);
+
+        sessionRepository
+                .findUserSessionByRefreshTokenHash(tokenHash)
+                .ifPresent(session ->
+                        session.revoke(Instant.now())
+                );
+    }
 }

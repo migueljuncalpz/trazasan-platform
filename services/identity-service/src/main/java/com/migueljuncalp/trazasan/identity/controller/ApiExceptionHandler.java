@@ -5,6 +5,7 @@ import com.migueljuncalp.trazasan.identity.service.exceptions.InvalidRefreshToke
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -41,5 +42,20 @@ public class ApiExceptionHandler {
         return ResponseEntity
             .status(HttpStatus.UNAUTHORIZED)
             .body(problem);
+    }
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    ResponseEntity<ProblemDetail> handleInvalidJson(
+            HttpMessageNotReadableException exception
+    ) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(
+                HttpStatus.BAD_REQUEST,
+                "El cuerpo de la petición no contiene un JSON válido"
+        );
+
+        problem.setTitle("JSON incorrecto");
+
+        return ResponseEntity
+                .badRequest()
+                .body(problem);
     }
 }
