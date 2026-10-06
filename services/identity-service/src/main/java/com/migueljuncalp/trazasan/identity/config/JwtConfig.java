@@ -19,6 +19,7 @@ import java.security.interfaces.RSAPublicKey;
 @EnableConfigurationProperties(JwtProperties.class)
 public class JwtConfig {
 
+
     @Bean
     RSAPublicKey jwtPublicKey(JwtProperties properties) throws IOException {
         try (var input = properties.publicKey().getInputStream()) {
