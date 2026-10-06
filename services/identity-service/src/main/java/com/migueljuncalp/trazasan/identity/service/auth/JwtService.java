@@ -1,4 +1,4 @@
-package com.migueljuncalp.trazasan.identity.service;
+package com.migueljuncalp.trazasan.identity.service.auth;
 
 import com.migueljuncalp.trazasan.identity.config.JwtProperties;
 import com.migueljuncalp.trazasan.identity.domain.AppUser;

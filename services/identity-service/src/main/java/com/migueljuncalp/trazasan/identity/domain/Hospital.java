@@ -27,15 +27,21 @@ public class Hospital {
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt = Instant.now();
 
+    @Column(name = "hospital_domain", nullable = false, updatable = false)
+    private String domain;
+
     protected Hospital() {
     }
 
-    public Hospital(String name, String slug) {
+    public Hospital(String name, String slug,String domain) {
         this.name = name;
         this.slug = slug;
+        this.domain = domain;
     }
 
     public UUID getId() {
         return id;
     }
+
+    public String getDomain() {return domain;}
 }

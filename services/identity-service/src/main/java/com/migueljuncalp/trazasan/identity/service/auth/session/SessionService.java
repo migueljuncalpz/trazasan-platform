@@ -1,13 +1,13 @@
-package com.migueljuncalp.trazasan.identity.service;
+package com.migueljuncalp.trazasan.identity.service.auth.session;
 
-import com.migueljuncalp.trazasan.identity.service.result.CreatedSession;
+import com.migueljuncalp.trazasan.identity.service.auth.result.CreatedSession;
 import com.migueljuncalp.trazasan.identity.domain.AppUser;
 import com.migueljuncalp.trazasan.identity.domain.UserSession;
 import com.migueljuncalp.trazasan.identity.repository.UserSessionRepository;
 import com.migueljuncalp.trazasan.identity.security.RefreshTokenGenerator;
 import com.migueljuncalp.trazasan.identity.security.RefreshTokenHasher;
 import com.migueljuncalp.trazasan.identity.service.exceptions.InvalidRefreshTokenException;
-import com.migueljuncalp.trazasan.identity.service.result.RefreshedSession;
+import com.migueljuncalp.trazasan.identity.service.auth.result.RefreshedSession;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,14 +1,14 @@
-package com.migueljuncalp.trazasan.identity.service;
+package com.migueljuncalp.trazasan.identity.service.auth;
 
 import com.migueljuncalp.trazasan.identity.controller.dto.auth.response.RefreshResponse;
+import com.migueljuncalp.trazasan.identity.service.auth.session.SessionService;
 import com.migueljuncalp.trazasan.identity.service.exceptions.InvalidCredentialsException;
-import com.migueljuncalp.trazasan.identity.service.result.CreatedSession;
+import com.migueljuncalp.trazasan.identity.service.auth.result.CreatedSession;
 import com.migueljuncalp.trazasan.identity.controller.dto.auth.request.LoginRequest;
 import com.migueljuncalp.trazasan.identity.controller.dto.auth.response.LoginResponse;
 import com.migueljuncalp.trazasan.identity.domain.AppUser;
-import com.migueljuncalp.trazasan.identity.domain.UserSession;
 import com.migueljuncalp.trazasan.identity.repository.AppUserRepository;
-import com.migueljuncalp.trazasan.identity.service.result.RefreshedSession;
+import com.migueljuncalp.trazasan.identity.service.auth.result.RefreshedSession;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

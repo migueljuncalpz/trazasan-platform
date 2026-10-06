@@ -24,6 +24,7 @@ trazasan:
   bootstrap-admin:
     hospital-name: ${TRAZASAN_ADMIN_HOSPITAL_NAME:Hospital inicial}
     hospital-slug: ${TRAZASAN_ADMIN_HOSPITAL_SLUG:hospital-inicial}
+    hospital-domain: ${TRAZASAN_ADMIN_HOSPITAL_DOMAIN:trazasan.local}
     email: ${TRAZASAN_ADMIN_EMAIL:admin@trazasan.local}
     password: ${TRAZASAN_ADMIN_PASSWORD:}
   jwt:

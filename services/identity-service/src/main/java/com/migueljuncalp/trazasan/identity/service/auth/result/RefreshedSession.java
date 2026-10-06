@@ -1,4 +1,4 @@
-package com.migueljuncalp.trazasan.identity.service.result;
+package com.migueljuncalp.trazasan.identity.service.auth.result;
 
 import com.migueljuncalp.trazasan.identity.domain.AppUser;
 

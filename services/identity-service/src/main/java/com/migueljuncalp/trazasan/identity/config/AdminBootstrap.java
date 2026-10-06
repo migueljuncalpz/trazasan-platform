@@ -26,6 +26,7 @@ public class AdminBootstrap implements ApplicationRunner {
     private final PasswordEncoder passwordEncoder;
     private final String hospitalName;
     private final String hospitalSlug;
+    private final String hospitalDomain;
     private final String adminEmail;
     private final String adminPassword;
 
@@ -35,6 +36,7 @@ public class AdminBootstrap implements ApplicationRunner {
             PasswordEncoder passwordEncoder,
             @Value("${trazasan.bootstrap-admin.hospital-name}") String hospitalName,
             @Value("${trazasan.bootstrap-admin.hospital-slug}") String hospitalSlug,
+            @Value("${trazasan.bootstrap-admin.hospital-domain}") String hospitalDomain,
             @Value("${trazasan.bootstrap-admin.email}") String adminEmail,
             @Value("${trazasan.bootstrap-admin.password:}") String adminPassword) {
         this.hospitalRepository = hospitalRepository;
@@ -42,6 +44,7 @@ public class AdminBootstrap implements ApplicationRunner {
         this.passwordEncoder = passwordEncoder;
         this.hospitalName = hospitalName;
         this.hospitalSlug = hospitalSlug;
+        this.hospitalDomain = hospitalDomain;
         this.adminEmail = adminEmail;
         this.adminPassword = adminPassword;
     }
@@ -56,7 +59,7 @@ public class AdminBootstrap implements ApplicationRunner {
 
         String normalizedEmail = adminEmail.trim().toLowerCase(Locale.ROOT);
         Hospital hospital = hospitalRepository.findBySlug(hospitalSlug)
-                .orElseGet(() -> hospitalRepository.save(new Hospital(hospitalName, hospitalSlug)));
+                .orElseGet(() -> hospitalRepository.save(new Hospital(hospitalName, hospitalSlug,hospitalDomain)));
 
         if (userRepository.existsByHospitalIdAndEmailIgnoreCase(hospital.getId(), normalizedEmail)) {
             log.info("El administrador inicial ya existe para el hospital {}", hospitalSlug);

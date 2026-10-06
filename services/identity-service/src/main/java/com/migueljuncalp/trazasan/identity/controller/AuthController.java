@@ -3,7 +3,7 @@ package com.migueljuncalp.trazasan.identity.controller;
 import com.migueljuncalp.trazasan.identity.controller.dto.auth.request.LoginRequest;
 import com.migueljuncalp.trazasan.identity.controller.dto.auth.response.LoginResponse;
 import com.migueljuncalp.trazasan.identity.controller.dto.auth.response.RefreshResponse;
-import com.migueljuncalp.trazasan.identity.service.AuthService;
+import com.migueljuncalp.trazasan.identity.service.auth.AuthService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
